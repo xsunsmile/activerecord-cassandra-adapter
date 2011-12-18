@@ -83,9 +83,10 @@ module ActiveRecord
 
         class_name = ActiveRecord::Base.class_name(table)
         rowid = Module.const_get(class_name).__identify.to_s
-
+        column_list.push "id"
         nvs = {}
-        column_list.zip(value_list).each {|n, v| nvs[n] = v.to_s }
+        nvs["id"] = rowid
+        column_list.zip(value_list).each {|n, v| nvs[n] = v.to_s}
 
         @connection.insert(cf, rowid, nvs)
 
